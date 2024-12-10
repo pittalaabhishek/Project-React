@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
+
+  const addTask = () => {
+    if(input.trim()) {
+      setTasks([...tasks, input.trim()]);
+      setInput("");
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="input-container">
+        <header>
+          <h1>Task Tracker</h1>
+        </header>
+        <input
+          type="text"
+          value={input}
+          placeholder="Add new Task"
+          onChange = { (e) => setInput(e.target.value)}
+        />
+        <button onClick={addTask}>Add</button>
+      </div>
+      <ol className="task-list">
+        {tasks.map((task, index) => (
+          <li key={index}>{task}</li>
+        ))}
+      </ol>
     </div>
   );
 }
